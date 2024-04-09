@@ -11,6 +11,7 @@
 
     <artifactId>common</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>common_util</module>
         <module>service_util</module>
@@ -50,6 +51,11 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
 

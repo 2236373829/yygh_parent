@@ -1,0 +1,40 @@
+server:
+  port: 8202
+
+spring:
+  application:
+    name: service_cmn # 服务名
+
+  profiles:
+    active: dev # 环境设置：dev、test、prod
+
+  datasource: # mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.204.101:3306/yygh_cmn?characterEncoding=utf-8&timeZone=Asia/Shanghai
+    username: root
+    password: mysqlmima
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #返回json的全局时间格式
+    time-zone: GMT+8
+
+  redis: #redis
+    host: 192.168.204.101
+    port: 6379
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1 # 最大阻塞等待时间(复数表示没限制)
+        max-idle: 5
+        min-idle: 0
+
+mybatis-plus: # mybatis-plus
+  global-config:
+    db-config:
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

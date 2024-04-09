@@ -8,23 +8,28 @@
         <version>2.2.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.atguigu</groupId>
     <artifactId>yygh_parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <packaging>pom</packaging>
+
     <name>yygh_parent</name>
     <description>yygh_parent</description>
+
     <modules>
         <module>common</module>
         <module>service</module>
         <module>model</module>
     </modules>
+
     <properties>
         <java.version>1.8</java.version>
         <cloud.version>Hoxton.RELEASE</cloud.version>
         <alibaba.version>2.2.0.RELEASE</alibaba.version>
-        <mybatis-plus.version>3.3.1</mybatis-plus.version>
-        <mysql.version>5.1.46</mysql.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <mysql.version>8.3.0</mysql.version>
         <swagger.version>2.7.0</swagger.version>
         <jwt.version>0.7.0</jwt.version>
         <fastjson.version>1.2.29</fastjson.version>
@@ -62,8 +67,8 @@
             </dependency>
 
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
 
