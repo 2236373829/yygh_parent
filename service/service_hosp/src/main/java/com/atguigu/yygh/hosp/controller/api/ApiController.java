@@ -5,10 +5,10 @@ import com.atguigu.yygh.common.helper.HttpRequestHelper;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.common.utils.MD5;
-import com.atguigu.yygh.hosp.service.impl.DepartmentServiceImpl;
-import com.atguigu.yygh.hosp.service.impl.HospitalServiceImpl;
-import com.atguigu.yygh.hosp.service.impl.HospitalSetServiceImpl;
-import com.atguigu.yygh.hosp.service.impl.ScheduleServiceImpl;
+import com.atguigu.yygh.hosp.service.DepartmentService;
+import com.atguigu.yygh.hosp.service.HospitalService;
+import com.atguigu.yygh.hosp.service.HospitalSetService;
+import com.atguigu.yygh.hosp.service.ScheduleService;
 import com.atguigu.yygh.model.hosp.Department;
 import com.atguigu.yygh.model.hosp.Hospital;
 import com.atguigu.yygh.model.hosp.Schedule;
@@ -32,16 +32,16 @@ import java.util.Map;
 @RequestMapping("/api/hosp")
 public class ApiController {
     @Autowired
-    private HospitalServiceImpl hospitalService;
+    private HospitalService hospitalService;
 
     @Autowired
-    private HospitalSetServiceImpl hospitalSetService;
+    private HospitalSetService hospitalSetService;
 
     @Autowired
-    private DepartmentServiceImpl departmentService;
+    private DepartmentService departmentService;
 
     @Autowired
-    private ScheduleServiceImpl scheduleService;
+    private ScheduleService scheduleService;
 
     /**
      * 验证签名方法

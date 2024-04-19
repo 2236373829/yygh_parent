@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author xyzZero3
  * @create 2024-04-04 14:23
+ *
+ * EasyExcel 读取excel时的监听器
  */
 public class DictListener extends AnalysisEventListener<DictEeVo> {
 

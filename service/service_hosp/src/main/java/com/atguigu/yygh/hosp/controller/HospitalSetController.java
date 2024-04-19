@@ -18,7 +18,6 @@ import java.util.Random;
  * @author xyzZero3
  * @create 2024-03-23 15:09
  */
-@CrossOrigin // 解决跨域最简单的方法
 @RestController
 @RequestMapping("/admin/hosp/hospitalSet")
 public class HospitalSetController {

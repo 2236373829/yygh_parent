@@ -14,7 +14,6 @@ import java.util.List;
  * @author xyzZero3
  * @create 2024-04-01 12:25
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/admin/cmn/dict")
 public class DictController {
@@ -24,6 +23,17 @@ public class DictController {
     @Autowired
     public void setDictService(DictService dictService) {
         this.dictService = dictService;
+    }
+
+    /**
+     * 查询id的子节点
+     * @param id
+     * @return
+     */
+    @GetMapping("/findChildrenData/{id}")
+    public Result findChildrenData(@PathVariable Long id) {
+        List<Dict> list = dictService.findChildDate(id);
+        return Result.ok(list);
     }
 
     /**
@@ -41,14 +51,32 @@ public class DictController {
     }
 
     /**
-     * 查询id的子节点
-     * @param id
+     * 根据dictCode和value值查询
+     * @param dictCode
+     * @param value
      * @return
      */
-    @GetMapping("/findChildrenData/{id}")
-    public Result findChildrenData(@PathVariable Long id) {
-        List<Dict> list = dictService.findChildDate(id);
-        return Result.ok(list);
+    @GetMapping("/getDictName/{dictCode}/{value}")
+    public String getDictName(@PathVariable String dictCode,
+                              @PathVariable String value) {
+        return dictService.getDictName(dictCode, value);
+    }
+
+    @GetMapping("/getDictName/{value}")
+    public String getDictName(@PathVariable String value) {
+        return dictService.getDictName("", value);
+    }
+
+    /**
+     * 根据dictCode获取下级节点
+     *
+     * @param dictCode
+     * @return
+     */
+    @GetMapping("/findByDictCode/{dictCode}")
+    public Result findByDictCode(@PathVariable String dictCode) {
+        List<Dict> dictList = dictService.findByDictCode(dictCode);
+        return Result.ok(dictList);
     }
 
 }

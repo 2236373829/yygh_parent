@@ -3,10 +3,15 @@ server:
 
 spring:
   application:
-    name: service_cmn # 服务名
+    name: service-cmn # 服务名
 
   profiles:
     active: dev # 环境设置：dev、test、prod
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
   datasource: # mysql
     driver-class-name: com.mysql.cj.jdbc.Driver

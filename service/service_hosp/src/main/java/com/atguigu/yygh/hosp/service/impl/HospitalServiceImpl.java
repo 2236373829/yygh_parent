@@ -1,13 +1,18 @@
 package com.atguigu.yygh.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.atguigu.yygh.cmn.client.DictFeignClient;
 import com.atguigu.yygh.hosp.repository.HospitalRepository;
 import com.atguigu.yygh.hosp.service.HospitalService;
 import com.atguigu.yygh.model.hosp.Hospital;
+import com.atguigu.yygh.vo.hosp.HospitalQueryVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,12 +22,12 @@ import java.util.Map;
 @Service
 public class HospitalServiceImpl implements HospitalService {
 
+    @Autowired
     private HospitalRepository hospitalRepository;
 
     @Autowired
-    public HospitalServiceImpl(HospitalRepository hospitalRepository) {
-        this.hospitalRepository = hospitalRepository;
-    }
+    private DictFeignClient dictFeignClient;
+
 
 
     @Override
@@ -55,4 +60,65 @@ public class HospitalServiceImpl implements HospitalService {
     public Hospital getByHoscode(String hoscode) {
         return hospitalRepository.getHospitalByHoscode(hoscode);
     }
+
+    @Override
+    public Page<Hospital> selectHospPage(Integer page, Integer limit, HospitalQueryVo hospitalQueryVo) {
+        // 创建pageable对象
+        Pageable pageable = PageRequest.of((page - 1), limit);
+        // 创建条件匹配器
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIgnoreCase(true);
+
+        // hospitalQueryVo转换成hospital对象
+        Hospital hospital = new Hospital();
+        BeanUtils.copyProperties(hospitalQueryVo, hospital);
+
+        Example<Hospital> example = Example.of(hospital, matcher);
+
+        final Page<Hospital> pages = hospitalRepository.findAll(example, pageable);
+        pages.getContent().forEach(this::setHospitalType);
+
+        return pages;
+    }
+
+    @Override
+    public void updateStatus(String id, Integer status) {
+        // 根据id查询要修改的医院信息
+        Hospital hospital = hospitalRepository.findById(id).get();
+
+        // 设置修改的值
+        hospital.setStatus(status);
+        hospital.setUpdateTime(new Date());
+        hospitalRepository.save(hospital);
+    }
+
+    @Override
+    public Map<String, Object> getHospById(String id) {
+        Hospital hospital = this.setHospitalType(hospitalRepository.findById(id).get());
+        Map<String, Object> hospitalMap = new HashMap<>();
+        hospitalMap.put("hospital", hospital);
+        hospitalMap.put("bookingRule", hospital.getBookingRule());
+        hospital.setBookingRule(null);
+        return hospitalMap;
+    }
+
+    @Override
+    public String getHosName(String hoscode) {
+        return hospitalRepository.getHospitalByHoscode(hoscode).getHosname();
+    }
+
+    private Hospital setHospitalType(Hospital hospital) {
+        String hostype = dictFeignClient.getDictName("Hostype", hospital.getHostype());
+        // 省 市 区
+        String province = dictFeignClient.getDictName(hospital.getProvinceCode());
+        String city = dictFeignClient.getDictName(hospital.getCityCode());
+        String district = dictFeignClient.getDictName(hospital.getDistrictCode());
+
+        hospital.getParam().put("hostypeString", hostype);
+        hospital.getParam().put("fullAddress", province + city + district);
+        return hospital;
+    }
+
+
 }
