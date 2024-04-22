@@ -26,17 +26,6 @@ public class DictController {
     }
 
     /**
-     * 查询id的子节点
-     * @param id
-     * @return
-     */
-    @GetMapping("/findChildrenData/{id}")
-    public Result findChildrenData(@PathVariable Long id) {
-        List<Dict> list = dictService.findChildDate(id);
-        return Result.ok(list);
-    }
-
-    /**
      * 导出数据字典
      * @return
      */
@@ -48,6 +37,17 @@ public class DictController {
     @PostMapping("/importDict")
     public void importDict(MultipartFile file) {
         dictService.importDict(file);
+    }
+
+    /**
+     * 查询id的子节点
+     * @param id
+     * @return
+     */
+    @GetMapping("/findChildrenData/{id}")
+    public Result findChildrenData(@PathVariable Long id) {
+        List<Dict> list = dictService.findChildDate(id);
+        return Result.ok(list);
     }
 
     /**

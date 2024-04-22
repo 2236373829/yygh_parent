@@ -4,6 +4,7 @@ import com.atguigu.yygh.model.hosp.Hospital;
 import com.atguigu.yygh.vo.hosp.HospitalQueryVo;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,5 +53,26 @@ public interface HospitalService {
      */
     Map<String, Object> getHospById(String id);
 
+    /**
+     * 根据医院编号获取医院名称
+     * @param hoscode
+     * @return
+     */
     String getHosName(String hoscode);
+
+    /**
+     * 根据医院名称查询
+     *
+     * @param hosname
+     * @return
+     */
+    List<Hospital> findByHosname(String hosname);
+
+    /**
+     * 根据医院编号获取医院详情信息
+     *
+     * @param hoscode
+     * @return
+     */
+    Map<String, Object> getHospDetail(String hoscode);
 }

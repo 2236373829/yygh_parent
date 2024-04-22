@@ -111,7 +111,6 @@ public class DepartmentServiceImpl implements DepartmentService {
             result.add(bigDepartmentVo);
         });
 
-
         /*for (Map.Entry<String, List<Department>> entry : departmentMap.entrySet()) {
             // 大科室编号
             String bigcode = entry.getKey();
